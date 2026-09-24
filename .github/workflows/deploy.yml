@@ -71,6 +71,13 @@ jobs:
             -e "s|__RUN_URL__|${RUN_URL}|g" \
             public/index.html
 
+      - name: Link Vercel project
+        run: |
+          vercel link --yes \
+            --project="$VERCEL_PROJECT_ID" \
+            --scope="$VERCEL_ORG_ID" \
+            --token="${{ secrets.VERCEL_TOKEN }}"
+
       - name: Pull Vercel project settings
         run: |
           VERCEL_ENV=$([ "$IS_PRODUCTION" = "true" ] && echo production || echo preview)
